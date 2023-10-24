@@ -4,6 +4,7 @@ import database.ConnectionFactory;
 import model.Motorista;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +26,8 @@ public class MotoristaDAO {
             stmt.setString(3, motorista.getNome());
             stmt.setString(4, motorista.getCpf());
             stmt.setString(5, motorista.getCnh());
-            stmt.setString(6, motorista.getDataCadastro().toString());
-
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
+            stmt.setString(6, dateFormat.format(motorista.getDataCadastro()));
             stmt.executeUpdate();
             stmt.close();
         } catch (Exception e) {
@@ -50,7 +51,10 @@ public class MotoristaDAO {
                 motorista.setNome(rs.getString("nome"));
                 motorista.setCpf(rs.getString("cpf"));
                 motorista.setCnh(rs.getString("cnh"));
-                motorista.setDataCadastro(rs.getDate("dataCadastro"));
+                //Convert de string para Date
+                //SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
+                //Date dataBD = (Date) dateFormat.parse(rs.getString("datacadastro"));
+                //motorista.setDataCadastro(dataBD);
             }
             rs.close();
             stmt.close();
@@ -107,7 +111,7 @@ public class MotoristaDAO {
                 motorista.setNome(rs.getString("nome"));
                 motorista.setCpf(rs.getString("cpf"));
                 motorista.setCnh(rs.getString("cnh"));
-                motorista.setDataCadastro(rs.getDate("dataCadastro"));
+                //motorista.setDataCadastro(rs.getDate("dataCadastro"));
                 motoristas.add(motorista);
             }
             rs.close();
@@ -118,4 +122,5 @@ public class MotoristaDAO {
         }
     }
 }
+
 
